@@ -7,21 +7,14 @@
 
 import SwiftUI
 
-struct DetailedView: View {
-    var number: Int
-    var body: some View {
-        Text("My lucky number is \(number)")
-    }
-}
-
 struct ContentView: View {
     var body: some View {
         NavigationStack {
-            List(1..<100) { number in
-            NavigationLink("Click") {
-                
-                    DetailedView(number: number)
-                }
+            List(0..<100) {i in
+                NavigationLink("Secelt \(i)", value: i)
+            }
+            .navigationDestination(for: Int.self) { selection in
+                Text("You selected \(selection)")
             }
         }
     }
