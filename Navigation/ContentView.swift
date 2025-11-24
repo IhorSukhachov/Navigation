@@ -7,18 +7,27 @@
 
 import SwiftUI
 
+struct DetailedView: View {
+    var number: Int
+    var body: some View {
+        Text("My lucky number is \(number)")
+    }
+}
+
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(1..<100) { number in
+            NavigationLink("Click") {
+                
+                    DetailedView(number: number)
+                }
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
 }
+ 
