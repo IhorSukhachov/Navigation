@@ -16,7 +16,11 @@ struct ContentView: View {
         NavigationStack(path: $path) {
             VStack {
                 Button("Show number 32") {
-                    path.append(32)
+                    path = [32]
+                }
+                
+                Button("Show number 12") {
+                    path.append(12)
                 }
             }
             .navigationDestination(for: Int.self) {selecion in
