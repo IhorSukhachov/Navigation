@@ -22,6 +22,10 @@ struct ContentView: View {
                 Button("Show number 12") {
                     path.append(12)
                 }
+                
+                Button("Show 32 then 12") {
+                    path = [32,12]
+                }
             }
             .navigationDestination(for: Int.self) {selecion in
                 Text("You selected \(selecion)")
