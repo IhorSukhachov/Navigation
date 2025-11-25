@@ -9,14 +9,14 @@ import SwiftUI
 
 struct DetailedView: View {
     var number: Int
-    @Binding var path: [Int]
+    @Binding var path: NavigationPath
     
     var body: some View {
         NavigationLink("Go to random number", value: Int.random(in: 1...1000))
             .navigationTitle("This is number: \(number)")
             .toolbar {
                 Button("Return to main page") {
-                    path.removeAll()
+                    path = NavigationPath()
                 }
             }
     }
@@ -24,7 +24,7 @@ struct DetailedView: View {
 
 struct ContentView: View {
  
-    @State private var path = [Int]()
+    @State private var path = NavigationPath()
     
    
     var body: some View {
