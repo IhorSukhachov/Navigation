@@ -24,6 +24,15 @@ class PathStore {
         }
         path = []
     }
+    
+    func save() {
+        do {
+            let data = try JSONEncoder().encode(path)
+            try data.write(to: savePath)
+        } catch {
+            print("Failed to save path")
+        }
+    }
 }
 
 struct DetailedView: View {
