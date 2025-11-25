@@ -6,17 +6,36 @@
 //
 
 import SwiftUI
+@Observable
+class PathStore {
+    var path: [Int] {
+        didSet {
+            save()
+        }
+    }
+    private let savePath = URL.documentsDirectory.appending(path: "SavedPath")
+    
+    init() {
+        if let data = try? Data(contentsOf: savePath) {
+            if let decoded = try? JSONDecoder().decode([Int].self, from: data) {
+                path = decoded
+                return
+            }
+        }
+        path = []
+    }
+}
 
 struct DetailedView: View {
     var number: Int
-    @Binding var path: NavigationPath
+    @Binding var path: [Int]
     
     var body: some View {
         NavigationLink("Go to random number", value: Int.random(in: 1...1000))
             .navigationTitle("This is number: \(number)")
             .toolbar {
                 Button("Return to main page") {
-                    path = NavigationPath()
+                    path.removeAll()
                 }
             }
     }
@@ -24,7 +43,7 @@ struct DetailedView: View {
 
 struct ContentView: View {
  
-    @State private var path = NavigationPath()
+    @State private var path = [Int]()
     
    
     var body: some View {
