@@ -7,41 +7,32 @@
 
 import SwiftUI
 
-
-
-struct ContentView: View {
-    @State private var path = NavigationPath()
+struct DetailedView: View {
+    var number: Int
+    @Binding var path: [Int]
     
     var body: some View {
-        NavigationStack(path: $path) {
-            List {
-                ForEach(0..<5) {i in
-                    NavigationLink("Select number \(i)", value: i)
-                }
-                
-                ForEach(0..<5) {i in
-                    NavigationLink("Select String \(i)", value: String(i))
-                }
-                
-                
-            }
+        NavigationLink("Go to random number", value: Int.random(in: 1...1000))
+            .navigationTitle("This is number: \(number)")
             .toolbar {
-                Button("Push number 556") {
-                    path.append(556)
+                Button("Return to main page") {
+                    path.removeAll()
                 }
-                Button("Push Hello") {
-                    path.append("Hello")
+            }
+    }
+}
+
+struct ContentView: View {
+ 
+    @State private var path = [Int]()
+    
+   
+    var body: some View {
+        NavigationStack(path: $path) {
+            DetailedView(number: 0, path: $path)
+                .navigationDestination(for: Int.self) {i in
+                    DetailedView(number: i, path: $path)
                 }
-                 
-            }
-            .navigationDestination(for: Int.self) {selection in
-                Text("You selected number \(selection)")
-            }
-            .navigationDestination(for: String.self) {selection in
-                Text("You selected string \(selection)")
-            }
-            
-            
         }
     }
 }
